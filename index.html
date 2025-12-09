@@ -2,163 +2,186 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>MundoMetalArt – Architect-Designed Closing Gifts</title>
+  <title>Architect-Designed Custom Metal Art | Mundo Metal Art</title>
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <meta name="description" content="Architect-designed custom metal art for Realtors. Premium, personalized closing gifts that become a permanent part of your clients' homes." />
+  <meta
+    name="description"
+    content="Premium architect-designed custom metal art for realtors and modern homeowners. Free mockups within 24 hours and bulk pricing for brokerages."
+  />
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon-crown.png" />
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+
   <style>
     :root {
       --bg: #050816;
-      --bg-alt: #0b1020;
-      --accent: #f4c15d;
-      --accent-soft: rgba(244,193,93,0.15);
-      --text: #f9fafb;
-      --muted: #9ca3af;
-      --border: #1f2933;
-      --card-bg: #0f172a;
-      --danger: #ef4444;
+      --bg-soft: #0b1020;
+      --card: #111827;
+      --card-soft: #111827;
+      --accent: #fbbf24;
+      --accent-soft: rgba(251, 191, 36, 0.1);
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.35);
+      --shadow-soft: 0 20px 45px rgba(15, 23, 42, 0.6);
+      --radius-xl: 24px;
       --radius-lg: 18px;
-      --radius-md: 12px;
-      --shadow-soft: 0 18px 40px rgba(0,0,0,0.55);
-      --max-width: 1120px;
+      --radius-pill: 999px;
     }
 
-    * { box-sizing: border-box; margin: 0; padding: 0; }
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
 
     body {
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
-      background: radial-gradient(circle at top, #101827 0, #020617 40%, #000 100%);
-      color: var(--text);
+      font-family: "Inter", system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 52%, #000 100%);
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
       line-height: 1.6;
     }
 
-    a { color: inherit; text-decoration: none; }
-    img { max-width: 100%; display: block; }
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
 
     .page {
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 28px 18px 72px;
     }
 
-    header {
-      position: sticky;
-      top: 0;
-      z-index: 30;
-      backdrop-filter: blur(16px);
-      background: linear-gradient(to bottom, rgba(5,8,22,0.9), rgba(5,8,22,0.6), transparent);
-      border-bottom: 1px solid rgba(15,23,42,0.8);
-    }
+    /* NAVBAR */
 
     .nav {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 14px 20px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      gap: 16px;
+      margin-bottom: 36px;
+      gap: 18px;
     }
 
-    .logo-wrap {
+    .nav-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .nav-logo {
       display: flex;
       align-items: center;
       gap: 10px;
     }
 
-    .logo-mark {
-      width: 32px;
-      height: 32px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.6);
+    .nav-logo img {
+      height: 40px;
+      width: auto;
+    }
+
+    .nav-title {
       display: flex;
-      align-items: center;
-      justify-content: center;
+      flex-direction: column;
+    }
+
+    .nav-title-main {
       font-weight: 700;
-      font-size: 16px;
-      background: radial-gradient(circle at 20% 0, #1e293b, #020617);
-      box-shadow: 0 0 0 1px rgba(15,23,42,0.9);
-    }
-
-    .logo-text-main {
-      font-weight: 600;
-      letter-spacing: 0.05em;
-      text-transform: uppercase;
-      font-size: 13px;
-    }
-
-    .logo-text-sub {
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .nav-links {
-      display: flex;
-      gap: 18px;
-      align-items: center;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .nav-links a:hover {
-      color: #e5e7eb;
-    }
-
-    .pill {
-      padding: 6px 10px;
-      border-radius: 999px;
-      border: 1px solid rgba(148,163,184,0.35);
-      font-size: 11px;
-      text-transform: uppercase;
       letter-spacing: 0.12em;
-      color: var(--muted);
+      font-size: 0.84rem;
+      text-transform: uppercase;
     }
 
-    main {
-      flex: 1;
+    .nav-title-sub {
+      font-size: 0.76rem;
+      color: var(--text-muted);
     }
 
-    section {
-      padding: 60px 20px;
+    .nav-pill {
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.35);
+      background: linear-gradient(
+        135deg,
+        rgba(15, 23, 42, 0.7),
+        rgba(15, 23, 42, 0.35)
+      );
+      font-size: 0.74rem;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
 
-    .section-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
+    .nav-pill span {
+      display: inline-flex;
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 0 4px rgba(74, 222, 128, 0.25);
     }
 
     /* HERO */
 
     .hero {
-      padding-top: 72px;
-      padding-bottom: 60px;
-    }
-
-    .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
-      gap: 40px;
+      grid-template-columns: minmax(0, 1.25fr) minmax(0, 1.35fr);
+      gap: 32px;
+      margin-bottom: 48px;
+    }
+
+    .hero-left {
+      background: radial-gradient(circle at top left, #1f2937 0, #020617 60%);
+      border-radius: var(--radius-xl);
+      padding: 26px 24px 24px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero-badge {
+      display: inline-flex;
       align-items: center;
-    }
-
-    @media (max-width: 900px) {
-      .hero-grid {
-        grid-template-columns: minmax(0,1fr);
-      }
-    }
-
-    .eyebrow {
-      font-size: 12px;
-      letter-spacing: 0.18em;
-      text-transform: uppercase;
+      gap: 8px;
+      padding: 4px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
       color: var(--accent);
+      background: rgba(15, 23, 42, 0.7);
+      border: 1px solid rgba(251, 191, 36, 0.3);
       margin-bottom: 14px;
+    }
+
+    .hero-badge-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: var(--accent);
     }
 
     .hero-title {
-      font-size: clamp(30px, 4vw, 40px);
-      line-height: 1.1;
-      font-weight: 700;
-      margin-bottom: 14px;
+      font-size: 2.1rem;
+      line-height: 1.15;
+      margin-bottom: 10px;
+      letter-spacing: -0.03em;
     }
 
     .hero-title span {
@@ -166,744 +189,860 @@
     }
 
     .hero-sub {
-      color: var(--muted);
-      font-size: 14px;
-      max-width: 460px;
-      margin-bottom: 22px;
+      font-size: 0.97rem;
+      color: var(--text-muted);
+      margin-bottom: 20px;
+      max-width: 30rem;
     }
 
-    .hero-cta {
+    .hero-cta-row {
       display: flex;
       flex-wrap: wrap;
-      gap: 12px;
-      margin-bottom: 20px;
-    }
-
-    .btn-primary,
-    .btn-secondary {
-      border-radius: 999px;
-      padding: 10px 18px;
-      font-size: 13px;
-      font-weight: 500;
-      border: 1px solid transparent;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      text-decoration: none;
+      gap: 10px;
+      margin-bottom: 16px;
     }
 
     .btn-primary {
-      background: linear-gradient(135deg, #facc6b, #f97316);
+      border: none;
+      cursor: pointer;
+      padding: 11px 18px;
+      border-radius: var(--radius-pill);
+      background: linear-gradient(135deg, #fbbf24, #f59e0b);
       color: #111827;
-      box-shadow: var(--shadow-soft);
+      font-weight: 600;
+      font-size: 0.92rem;
+      box-shadow: 0 14px 30px rgba(251, 191, 36, 0.4);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
     }
 
     .btn-primary span.icon {
-      font-size: 15px;
+      font-size: 1rem;
     }
 
-    .btn-secondary {
-      background: rgba(15,23,42,0.9);
+    .btn-ghost {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: rgba(15, 23, 42, 0.75);
+      color: var(--text-main);
+      padding: 11px 16px;
+      font-size: 0.92rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      cursor: pointer;
+    }
+
+    .hero-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta strong {
       color: #e5e7eb;
-      border-color: rgba(148,163,184,0.4);
     }
 
-    .hero-note {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .hero-card {
-      border-radius: var(--radius-lg);
-      background: radial-gradient(circle at top, #0f172a, #020617);
-      border: 1px solid rgba(148,163,184,0.35);
-      padding: 20px;
+    .hero-right {
+      border-radius: var(--radius-xl);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: radial-gradient(circle at top right, #1f2937 0, #020617 58%);
+      padding: 10px;
       box-shadow: var(--shadow-soft);
+      display: flex;
+      align-items: stretch;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-mockup-main {
+      flex: 1.4;
+      border-radius: 20px;
+      overflow: hidden;
+      background: #020617;
+    }
+
+    .hero-mockup-side {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding-left: 10px;
+    }
+
+    .hero-mockup-side img {
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      background: #020617;
+      flex: 1;
+      object-fit: cover;
+    }
+
+    .hero-tag {
+      position: absolute;
+      top: 18px;
+      right: 18px;
+      padding: 6px 10px;
+      border-radius: var(--radius-pill);
+      font-size: 0.72rem;
+      background: rgba(15, 23, 42, 0.85);
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hero-tag span {
+      font-size: 0.8rem;
+      color: var(--accent);
+    }
+
+    /* SECTION WRAPPER */
+
+    .section {
+      margin-bottom: 40px;
+    }
+
+    .section-header {
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      gap: 16px;
+    }
+
+    .section-eyebrow {
+      font-size: 0.74rem;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 4px;
+    }
+
+    .section-title {
+      font-size: 1.3rem;
+      letter-spacing: -0.02em;
+    }
+
+    .section-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      max-width: 32rem;
+    }
+
+    /* FEATURES GRID */
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .feature-card {
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at top, #111827 0, #020617 100%);
+      border: 1px solid var(--border-subtle);
+      padding: 14px 14px 16px;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
       position: relative;
       overflow: hidden;
     }
 
-    .hero-card-tag {
-      position: absolute;
-      top: 16px;
-      left: 16px;
-      padding: 4px 10px;
-      border-radius: 999px;
-      background: rgba(15,23,42,0.85);
-      border: 1px solid rgba(148,163,184,0.5);
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--muted);
-    }
-
-    .hero-card-img {
-      border-radius: var(--radius-md);
-      overflow: hidden;
-      border: 1px solid rgba(15,23,42,0.9);
-      margin-bottom: 12px;
-    }
-
-    .hero-card-caption {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    .hero-card-caption strong {
-      color: #e5e7eb;
-    }
-
-    /* FEATURES */
-
-    .section-label {
-      font-size: 12px;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .section-title {
-      font-size: 22px;
-      font-weight: 600;
-      margin-bottom: 8px;
-    }
-
-    .section-sub {
-      color: var(--muted);
-      font-size: 14px;
-      max-width: 540px;
-      margin-bottom: 28px;
-    }
-
-    .feature-grid {
-      display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 18px;
-    }
-
-    @media (max-width: 900px) {
-      .feature-grid {
-        grid-template-columns: repeat(2, minmax(0,1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .feature-grid {
-        grid-template-columns: minmax(0,1fr);
-      }
-    }
-
-    .feature-card {
-      background: var(--card-bg);
-      border-radius: var(--radius-md);
-      border: 1px solid var(--border);
-      padding: 16px 16px 18px;
-      box-shadow: 0 16px 35px rgba(15,23,42,0.7);
-    }
-
-    .feature-icon {
-      width: 26px;
-      height: 26px;
-      border-radius: 8px;
-      background: var(--accent-soft);
+    .feature-pill {
+      font-size: 0.7rem;
       color: var(--accent);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 14px;
-      margin-bottom: 10px;
+      margin-bottom: 2px;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
     }
 
     .feature-title {
-      font-size: 14px;
+      font-size: 0.96rem;
       font-weight: 600;
-      margin-bottom: 6px;
     }
 
-    .feature-text {
-      font-size: 13px;
-      color: var(--muted);
+    .feature-body {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .feature-icon-dot {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      width: 18px;
+      height: 18px;
+      border-radius: 999px;
+      background: radial-gradient(circle, #facc15 0, #f97316 50%, transparent 70%);
+      opacity: 0.9;
     }
 
     /* PROCESS */
 
     .process-grid {
       display: grid;
-      grid-template-columns: repeat(4, minmax(0,1fr));
-      gap: 16px;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 14px;
     }
 
-    @media (max-width: 900px) {
-      .process-grid {
-        grid-template-columns: repeat(2, minmax(0,1fr));
-      }
-    }
-
-    @media (max-width: 640px) {
-      .process-grid {
-        grid-template-columns: minmax(0,1fr);
-      }
-    }
-
-    .step-card {
-      border-radius: var(--radius-md);
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+    .process-step {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: linear-gradient(145deg, #020617, #020617, #111827);
       padding: 14px 14px 16px;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      position: relative;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.7);
     }
 
-    .step-num {
-      font-size: 11px;
-      text-transform: uppercase;
-      letter-spacing: 0.16em;
-      color: var(--muted);
-      margin-bottom: 8px;
-    }
-
-    .step-title {
-      font-size: 14px;
-      font-weight: 600;
+    .process-step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      font-size: 0.78rem;
       margin-bottom: 6px;
     }
 
-    .step-text {
-      font-size: 13px;
-      color: var(--muted);
+    .process-step-title {
+      font-size: 0.92rem;
+      color: #e5e7eb;
+      font-weight: 600;
+      margin-bottom: 4px;
     }
 
     /* PACKAGES */
 
-    .pricing-grid {
+    .packages-grid {
       display: grid;
-      grid-template-columns: repeat(3, minmax(0,1fr));
-      gap: 18px;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 16px;
     }
 
-    @media (max-width: 900px) {
-      .pricing-grid {
-        grid-template-columns: minmax(0,1fr);
-      }
-    }
-
-    .pricing-card {
+    .package-card {
       border-radius: var(--radius-lg);
-      background: radial-gradient(circle at top, #111827, #020617);
-      border: 1px solid rgba(148,163,184,0.5);
-      padding: 18px 18px 20px;
-      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, #020617, #020617 50%, #020617);
+      padding: 16px 16px 18px;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.7);
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
       position: relative;
     }
 
-    .pricing-badge {
-      position: absolute;
-      top: 16px;
-      right: 16px;
-      font-size: 11px;
+    .package-tag {
+      font-size: 0.72rem;
+      color: var(--accent);
       text-transform: uppercase;
       letter-spacing: 0.16em;
-      padding: 4px 10px;
-      border-radius: 999px;
+      margin-bottom: 2px;
+    }
+
+    .package-title {
+      font-size: 0.98rem;
+      font-weight: 600;
+    }
+
+    .package-desc {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .package-meta {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .package-meta strong {
+      color: #e5e7eb;
+    }
+
+    .package-list {
+      list-style: none;
+      margin: 6px 0 10px;
+      padding-left: 0;
+    }
+
+    .package-list li {
+      font-size: 0.8rem;
+      color: #d1d5db;
+      display: flex;
+      align-items: flex-start;
+      gap: 6px;
+      margin-bottom: 4px;
+    }
+
+    .package-list li span {
+      font-size: 0.9rem;
+      line-height: 1.4;
+      color: var(--accent);
+      margin-top: 1px;
+    }
+
+    .package-cta {
+      margin-top: auto;
+      display: flex;
+      justify-content: flex-start;
+    }
+
+    .btn-outline {
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: transparent;
+      color: #e5e7eb;
+      font-size: 0.84rem;
+      padding: 8px 14px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .package-badge-popular {
+      position: absolute;
+      top: 10px;
+      right: 12px;
+      font-size: 0.7rem;
+      padding: 4px 8px;
+      border-radius: var(--radius-pill);
       background: var(--accent-soft);
       color: var(--accent);
-    }
-
-    .pricing-name {
-      font-size: 15px;
-      font-weight: 600;
-      margin-bottom: 6px;
-    }
-
-    .pricing-desc {
-      font-size: 13px;
-      color: var(--muted);
-      margin-bottom: 12px;
-    }
-
-    .pricing-list {
-      list-style: none;
-      margin-bottom: 14px;
-      font-size: 13px;
-      color: var(--muted);
-    }
-
-    .pricing-list li {
-      display: flex;
-      gap: 6px;
-      margin-bottom: 6px;
-    }
-
-    .pricing-list li span.check {
-      color: #22c55e;
-      margin-top: 2px;
-    }
-
-    .pricing-note {
-      font-size: 11px;
-      color: var(--muted);
-      margin-top: 4px;
+      border: 1px solid rgba(251, 191, 36, 0.5);
     }
 
     /* FAQ */
 
     .faq-grid {
       display: grid;
-      grid-template-columns: repeat(2, minmax(0,1fr));
-      gap: 18px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 16px;
     }
 
-    @media (max-width: 900px) {
-      .faq-grid {
-        grid-template-columns: minmax(0,1fr);
-      }
-    }
-
-    .faq-item {
-      border-radius: var(--radius-md);
-      background: var(--card-bg);
-      border: 1px solid var(--border);
+    .faq-card {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top, #020617 0, #020617 100%);
       padding: 14px 16px 16px;
+      box-shadow: 0 18px 35px rgba(15, 23, 42, 0.7);
+      font-size: 0.82rem;
+      color: var(--text-muted);
     }
 
-    .faq-q {
-      font-size: 14px;
+    .faq-question {
+      font-size: 0.9rem;
+      color: #e5e7eb;
       font-weight: 600;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
     }
 
-    .faq-a {
-      font-size: 13px;
-      color: var(--muted);
-    }
+    /* FORM SECTION */
 
-    /* CONTACT */
-
-    .contact-grid {
+    .form-section {
+      border-radius: var(--radius-xl);
+      border: 1px solid var(--border-subtle);
+      background: radial-gradient(circle at top left, #020617 0, #020617 55%, #020617);
+      padding: 20px 18px 20px;
+      box-shadow: 0 26px 50px rgba(15, 23, 42, 0.85);
       display: grid;
-      grid-template-columns: minmax(0,1.1fr) minmax(0,1fr);
-      gap: 24px;
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
+      gap: 22px;
       align-items: flex-start;
     }
 
-    @media (max-width: 900px) {
-      .contact-grid {
-        grid-template-columns: minmax(0,1fr);
+    .form-header-eyebrow {
+      font-size: 0.8rem;
+      color: var(--accent);
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      margin-bottom: 4px;
+    }
+
+    .form-title {
+      font-size: 1.28rem;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+    }
+
+    .form-sub {
+      font-size: 0.88rem;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      max-width: 24rem;
+    }
+
+    .form-bullets {
+      list-style: none;
+      padding-left: 0;
+      margin: 0;
+    }
+
+    .form-bullets li {
+      font-size: 0.82rem;
+      color: #d1d5db;
+      margin-bottom: 4px;
+      display: flex;
+      gap: 6px;
+      align-items: flex-start;
+    }
+
+    .form-bullets li span {
+      color: var(--accent);
+      font-size: 0.9rem;
+      margin-top: 1px;
+    }
+
+    .form-note {
+      margin-top: 8px;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+    }
+
+    .form-card {
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: #020617;
+      padding: 14px 14px 16px;
+      min-height: 220px;
+      position: relative;
+    }
+
+    .form-card-label {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+
+    .form-card-placeholder {
+      border-radius: 14px;
+      border: 1px dashed rgba(148, 163, 184, 0.55);
+      background: rgba(15, 23, 42, 0.75);
+      padding: 12px 10px;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      text-align: center;
+    }
+
+    .form-card-placeholder strong {
+      color: #e5e7eb;
+    }
+
+    .footer {
+      margin-top: 40px;
+      padding-top: 14px;
+      border-top: 1px solid rgba(31, 41, 55, 0.9);
+      font-size: 0.75rem;
+      color: #6b7280;
+      text-align: center;
+    }
+
+    @media (max-width: 960px) {
+      .hero {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .hero-right {
+        order: -1;
+      }
+
+      .features-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .process-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .packages-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+
+      .form-section {
+        grid-template-columns: minmax(0, 1fr);
       }
     }
 
-    form {
-      display: grid;
-      gap: 10px;
-    }
+    @media (max-width: 640px) {
+      .page {
+        padding: 20px 14px 40px;
+      }
 
-    label {
-      font-size: 12px;
-      color: var(--muted);
-    }
+      .features-grid,
+      .process-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
 
-    input,
-    textarea {
-      margin-top: 4px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(148,163,184,0.5);
-      background: #020617;
-      color: var(--text);
-      font-size: 13px;
-      outline: none;
-    }
+      .hero-title {
+        font-size: 1.6rem;
+      }
 
-    input:focus,
-    textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(244,193,93,0.3);
-    }
+      .hero-right {
+        padding: 8px;
+      }
 
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
-    .contact-note {
-      font-size: 12px;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    footer {
-      border-top: 1px solid rgba(15,23,42,0.9);
-      padding: 18px 20px 24px;
-      font-size: 11px;
-      color: var(--muted);
-    }
-
-    .footer-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      flex-wrap: wrap;
+      .form-section {
+        padding: 16px 14px 18px;
+      }
     }
   </style>
 </head>
+
 <body>
-<div class="page">
-
-  <header>
-    <div class="nav">
-      <div class="logo-wrap">
-        <div class="logo-mark">M</div>
-        <div>
-          <div class="logo-text-main">MundoMetalArt</div>
-          <div class="logo-text-sub">Architect-Designed Metal Art</div>
-        </div>
+  <div class="page">
+    <!-- NAVBAR -->
+    <header class="nav">
+      <div class="nav-left">
+        <a href="#top" class="nav-logo">
+          <img src="logo-mundo-metal-art.png" alt="Mundo Metal Art logo" />
+          <div class="nav-title">
+            <div class="nav-title-main">MUNDO METAL ART</div>
+            <div class="nav-title-sub">Architect-Designed Metal Art</div>
+          </div>
+        </a>
       </div>
-      <div class="nav-links">
-        <a href="#features">For Realtors</a>
-        <a href="#process">How it Works</a>
-        <a href="#pricing">Packages</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact">Contact</a>
-        <div class="pill">Realtor Closing Gifts</div>
+      <div class="nav-pill">
+        <span></span>
+        Realtor mockups delivered within 24 hours
       </div>
-    </div>
-  </header>
+    </header>
 
-  <main>
     <!-- HERO -->
-    <section class="hero">
-      <div class="section-inner hero-grid">
-        <div>
-          <div class="eyebrow">Architect-Designed Closing Gifts</div>
+    <main>
+      <section class="hero" id="top">
+        <div class="hero-left">
+          <div class="hero-badge">
+            <div class="hero-badge-dot"></div>
+            For realtors &amp; luxury listings
+          </div>
           <h1 class="hero-title">
             Premium <span>custom metal art</span> that keeps your clients remembering you.
           </h1>
           <p class="hero-sub">
-            MundoMetalArt creates architect-designed, fully personalized metal wall art
-            for Realtors who want closing gifts that feel as permanent and elegant as the home itself.
+            Architect-designed, fully personalized metal wall signs that feel as permanent
+            and elegant as the home itself. Perfect for high-end closings and signature listings.
           </p>
-          <div class="hero-cta">
-            <a class="btn-primary" href="#contact">
-              <span class="icon">★</span>
-              <span>Request a Free Mockup</span>
-            </a>
-            <a class="btn-secondary" href="#features">
-              View Designs & Benefits
+          <div class="hero-cta-row">
+            <a href="https://preview.mailerlite.io/forms/1967306/173312613595219192/share" class="btn-primary" target="_blank">
+			  <span class="icon">✦</span>
+			  Request a free mockup
+			</a>
+            <a href="#packages" class="btn-ghost">
+              View realtor packages
             </a>
           </div>
-          <p class="hero-note">
-            Designed by a professional architect. Custom names, estate titles, addresses & agency branding available.
+          <p class="hero-meta">
+            <strong>Free mockups.</strong> No obligation. Bulk pricing available for agents &amp; brokerages.
           </p>
         </div>
-        <div>
-          <div class="hero-card">
-            <div class="hero-card-tag">Realtor’s Choice</div>
-            <div class="hero-card-img">
-              <!-- TODO: replace with your Gatsby / gate mockup image -->
-              <img src="hero-sample.jpg" alt="Custom metal estate sign on stone entrance" />
-            </div>
-            <p class="hero-card-caption">
-              <strong>“Gatsby Manor” Estate Sign</strong> – one of our most requested designs for
-              luxury property closings. Fully customizable with your client’s family name or estate title.
-            </p>
+
+        <div class="hero-right">
+          <div class="hero-tag">
+            <span>★</span> Realtor’s choice closing sign
+          </div>
+
+          <!-- Main mockup (banner style cityscape) -->
+          <div class="hero-mockup-main">
+            <img src="metal_art_mockup-main.png" alt="Premium architect-designed metal wall art in modern living room" />
+          </div>
+
+          <!-- Side column with two alternate mockups -->
+          <div class="hero-mockup-side">
+            <img src="metal_art_mockup-alt1.png" alt="Art Deco custom estate sign at stone entrance" />
+            <img src="metal_art_mockup-alt2.png" alt="Modern house number plaque on white façade" />
           </div>
         </div>
-      </div>
-    </section>
+      </section>
 
-    <!-- FEATURES -->
-    <section id="features">
-      <div class="section-inner">
-        <div class="section-label">For Modern Realtors</div>
-        <h2 class="section-title">Why Our Pieces Make Unforgettable Closing Gifts</h2>
-        <p class="section-sub">
-          Your clients will receive flowers, bottles of wine and gift baskets from many people.
-          Our goal is to create a single statement piece they’ll see every day – and always associate with you.
-        </p>
-
-        <div class="feature-grid">
-          <div class="feature-card">
-            <div class="feature-icon">⧉</div>
-            <div class="feature-title">Architect-Designed</div>
-            <p class="feature-text">
-              Every design starts as an architectural drawing – balanced proportions, clean geometry and timeless aesthetics.
-            </p>
+      <!-- WHY IT WORKS -->
+      <section class="section" id="benefits">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">For modern realtors</div>
+            <h2 class="section-title">Why our pieces make unforgettable closing gifts</h2>
           </div>
-          <div class="feature-card">
-            <div class="feature-icon">✧</div>
-            <div class="feature-title">Fully Customizable</div>
-            <p class="feature-text">
-              Add your client’s family name, estate title, street number or your agency branding. Each piece is unique.
-            </p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">⚙</div>
-            <div class="feature-title">Production-Ready Design</div>
-            <p class="feature-text">
-              Designs are converted into DXF/SVG for precise cutting, ensuring crisp lines and perfect metal craftsmanship.
-            </p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">☼</div>
-            <div class="feature-title">Indoor & Outdoor Ready</div>
-            <p class="feature-text">
-              Durable coated metal suitable for entry gates, facades, porches and interior feature walls.
-            </p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">🕒</div>
-            <div class="feature-title">Fast Turnaround</div>
-            <p class="feature-text">
-              Mockups within 24 hours. Once approved, production and shipping are scheduled to match your closing dates.
-            </p>
-          </div>
-          <div class="feature-card">
-            <div class="feature-icon">∞</div>
-            <div class="feature-title">Bulk & Agency Pricing</div>
-            <p class="feature-text">
-              Special conditions for agents and brokerages ordering multiple pieces throughout the year.
-            </p>
-          </div>
+          <p class="section-sub">
+            Your clients will forget flowers and gift baskets – but they’ll see a bespoke metal
+            sign every day as they come home. Our goal is to create a single statement piece
+            they’ll love &amp; always associate with you.
+          </p>
         </div>
-      </div>
-    </section>
 
-    <!-- PROCESS -->
-    <section id="process">
-      <div class="section-inner">
-        <div class="section-label">From Idea to Installation</div>
-        <h2 class="section-title">Simple 3-Step Process for Busy Agents</h2>
-        <p class="section-sub">
-          We designed our workflow to be effortless for you. You share the names and basic preferences –
-          we handle the design, mockup and production.
-        </p>
+        <div class="features-grid">
+          <article class="feature-card">
+            <div class="feature-icon-dot"></div>
+            <div class="feature-pill">Architect-designed</div>
+            <h3 class="feature-title">Balanced proportions &amp; timeless geometry</h3>
+            <p class="feature-body">
+              Every design starts as an architectural drawing – clean lines, elegant
+              symmetry, and Art Deco-inspired detail made for real homes.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon-dot"></div>
+            <div class="feature-pill">Fully customizable</div>
+            <h3 class="feature-title">Client names, numbers &amp; branding</h3>
+            <p class="feature-body">
+              Add your client’s family name, estate title, street number or your
+              agency branding. Each piece is laid out by an architect for perfect legibility.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon-dot"></div>
+            <div class="feature-pill">Production-ready</div>
+            <h3 class="feature-title">Ready for laser cutting &amp; powder coating</h3>
+            <p class="feature-body">
+              Final designs are converted into clean DXF/SVG files so your fabricator can
+              cut with crisp edges and perfect metal craftsmanship.
+            </p>
+          </article>
+
+          <article class="feature-card">
+            <div class="feature-icon-dot"></div>
+            <div class="feature-pill">Indoor &amp; outdoor</div>
+            <h3 class="feature-title">Designed to live with the home</h3>
+            <p class="feature-body">
+              Suitable for gated entrances, stone columns, façades and interior feature walls.
+              We’ll recommend ideal sizes based on your installation.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- PROCESS -->
+      <section class="section" id="process">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">From idea to installation</div>
+            <h2 class="section-title">Simple 3-step process for busy agents</h2>
+          </div>
+          <p class="section-sub">
+            Send us a few details – we’ll handle the design, mockup and production-ready art files
+            so your closing gift is always on-brand and on-time.
+          </p>
+        </div>
 
         <div class="process-grid">
-          <div class="step-card">
-            <div class="step-num">Step 1</div>
-            <div class="step-title">Share Your Client Details</div>
-            <p class="step-text">
-              Send us the family name, estate title, address or branding you’d like to feature, plus an approximate size.
+          <article class="process-step">
+            <div class="process-step-badge">1</div>
+            <h3 class="process-step-title">Share your client details</h3>
+            <p>
+              Tell us the family name, estate title or house number you’d like on the piece.
+              Add any notes about style, placement or brand colours.
             </p>
+          </article>
+
+          <article class="process-step">
+            <div class="process-step-badge">2</div>
+            <h3 class="process-step-title">Receive a free mockup</h3>
+            <p>
+              Within 24 hours you’ll receive a realistic mockup of the sign on a home –
+              so you and your client can instantly visualize the final look.
+            </p>
+          </article>
+
+          <article class="process-step">
+            <div class="process-step-badge">3</div>
+            <h3 class="process-step-title">Approve &amp; hand off</h3>
+            <p>
+              Once approved, we prepare production-ready vector files sized correctly
+              for your chosen location and fabricator.
+            </p>
+          </article>
+
+          <article class="process-step">
+            <div class="process-step-badge">4</div>
+            <h3 class="process-step-title">Deliver the moment</h3>
+            <p>
+              Present a bespoke metal sign that becomes part of the property’s story – a
+              high-impact gift your clients associate with you for years.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- PACKAGES -->
+      <section class="section" id="packages">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Realtor packages</div>
+            <h2 class="section-title">Flexible options for agents &amp; brokerages</h2>
           </div>
-          <div class="step-card">
-            <div class="step-num">Step 2</div>
-            <div class="step-title">Receive a Free Mockup</div>
-            <p class="step-text">
-              We create a realistic design preview so you and your client can see exactly how the piece will look.
+          <p class="section-sub">
+            Whether you close a few homes per year or manage a full-scale team,
+            we’ll adapt mockup volume and pricing to fit.
+          </p>
+        </div>
+
+        <div class="packages-grid">
+          <!-- Starter -->
+          <article class="package-card">
+            <div class="package-tag">Starter agent pack</div>
+            <h3 class="package-title">Perfect for 1–3 closings per month</h3>
+            <p class="package-desc">
+              Try architect-designed metal art as your new signature closing gift.
             </p>
-          </div>
-          <div class="step-card">
-            <div class="step-num">Step 3</div>
-            <div class="step-title">Approve & Produce</div>
-            <p class="step-text">
-              Once approved, we prepare production-ready files and craft the metal piece to spec.
+            <p class="package-meta">
+              <strong>Includes:</strong> 1 custom mockup + production-ready files per closing.
             </p>
-          </div>
-          <div class="step-card">
-            <div class="step-num">Step 4</div>
-            <div class="step-title">Deliver the Moment</div>
-            <p class="step-text">
-              The finished piece arrives ready to install – a luxury closing gift that becomes part of the home’s story.
+            <ul class="package-list">
+              <li><span>•</span> Personalized sign text with family name or estate title</li>
+              <li><span>•</span> Free realistic mockup before production</li>
+              <li><span>•</span> Design sized to your chosen location</li>
+            </ul>
+            <div class="package-cta">
+              <a href="#mockup" class="btn-outline">Request starter details →</a>
+            </div>
+          </article>
+
+          <!-- Pro -->
+          <article class="package-card">
+            <div class="package-badge-popular">Most popular</div>
+            <div class="package-tag">Pro realtor plan</div>
+            <h3 class="package-title">For agents with multiple monthly closings</h3>
+            <p class="package-desc">
+              Keep a consistent, premium gift for every buyer while saving on volume.
             </p>
+            <p class="package-meta">
+              <strong>Typically:</strong> 3–8 mockups per month with preferred rates.
+            </p>
+            <ul class="package-list">
+              <li><span>•</span> Priority 24-hour mockup turnaround</li>
+              <li><span>•</span> Dedicated design variations for special listings</li>
+              <li><span>•</span> Optional subtle branding with your logo</li>
+            </ul>
+            <div class="package-cta">
+              <a href="#mockup" class="btn-outline">Get pro plan info →</a>
+            </div>
+          </article>
+
+          <!-- Brokerage -->
+          <article class="package-card">
+            <div class="package-tag">Brokerage partnership</div>
+            <h3 class="package-title">Branded program for teams &amp; offices</h3>
+            <p class="package-desc">
+              Build a signature metal art program that every agent in your office can use.
+            </p>
+            <p class="package-meta">
+              <strong>Designed for:</strong> offices ordering multiple pieces throughout the year.
+            </p>
+            <ul class="package-list">
+              <li><span>•</span> Custom design templates aligned with brokerage branding</li>
+              <li><span>•</span> Wholesale / bulk pricing for ongoing orders</li>
+              <li><span>•</span> Optional co-branded gifts for luxury listings</li>
+            </ul>
+            <div class="package-cta">
+              <a href="#mockup" class="btn-outline">Request partnership details →</a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- FAQ -->
+      <section class="section" id="faq">
+        <div class="section-header">
+          <div>
+            <div class="section-eyebrow">Questions</div>
+            <h2 class="section-title">Frequently asked by realtors</h2>
           </div>
         </div>
-      </div>
-    </section>
-
-    <!-- PRICING -->
-    <section id="pricing">
-      <div class="section-inner">
-        <div class="section-label">Realtor Packages</div>
-        <h2 class="section-title">Flexible Options for Agents & Brokerages</h2>
-        <p class="section-sub">
-          Whether you close a few homes per year or manage a full team, we can adapt our designs and pricing to fit.
-          All packages include design support from an architect.
-        </p>
-
-        <div class="pricing-grid">
-          <div class="pricing-card">
-            <div class="pricing-name">Starter Agent Pack</div>
-            <div class="pricing-desc">
-              Ideal for individual agents who want one premium gift at a time.
-            </div>
-            <ul class="pricing-list">
-              <li><span class="check">✔</span><span>1 custom metal art piece per closing</span></li>
-              <li><span class="check">✔</span><span>Personalized with client name or estate title</span></li>
-              <li><span class="check">✔</span><span>Free mockup before production</span></li>
-            </ul>
-            <a href="#contact" class="btn-secondary">Request Pricing</a>
-            <div class="pricing-note">Perfect if you’re testing a new closing gift experience.</div>
-          </div>
-
-          <div class="pricing-card">
-            <div class="pricing-badge">Most Popular</div>
-            <div class="pricing-name">Pro Realtor Plan</div>
-            <div class="pricing-desc">
-              For active agents closing multiple homes each month.
-            </div>
-            <ul class="pricing-list">
-              <li><span class="check">✔</span><span>3–5 pieces per month on average</span></li>
-              <li><span class="check">✔</span><span>Priority design & production queue</span></li>
-              <li><span class="check">✔</span><span>Realtor-exclusive discounted rates</span></li>
-              <li><span class="check">✔</span><span>Optional agency-branded designs</span></li>
-            </ul>
-            <a href="#contact" class="btn-primary">Get Pro Plan Details</a>
-            <div class="pricing-note">Best choice for top-producing agents.</div>
-          </div>
-
-          <div class="pricing-card">
-            <div class="pricing-name">Brokerage Partnership</div>
-            <div class="pricing-desc">
-              For offices and teams who want a consistent, branded closing gift program.
-            </div>
-            <ul class="pricing-list">
-              <li><span class="check">✔</span><span>10–50+ pieces annually</span></li>
-              <li><span class="check">✔</span><span>Custom templates with your logo & brand</span></li>
-              <li><span class="check">✔</span><span>Dedicated design support</span></li>
-              <li><span class="check">✔</span><span>Wholesale / bulk pricing</span></li>
-            </ul>
-            <a href="#contact" class="btn-secondary">Request Partnership Info</a>
-            <div class="pricing-note">Let’s design a program tailored to your brokerage.</div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- FAQ -->
-    <section id="faq">
-      <div class="section-inner">
-        <div class="section-label">Questions</div>
-        <h2 class="section-title">Frequently Asked by Realtors</h2>
 
         <div class="faq-grid">
-          <div class="faq-item">
-            <div class="faq-q">Do you ship across the United States?</div>
-            <div class="faq-a">
-              Yes. We can ship to any U.S. state. For large brokerage partnerships we can also coordinate
-              delivery schedules around your closing calendar.
-            </div>
+          <article class="faq-card">
+            <h3 class="faq-question">Can I see the design before I commit?</h3>
+            <p>
+              Yes. Every project begins with a free mockup. Once you’re happy with the layout
+              and typography, we’ll finalize production-ready files for your fabricator.
+            </p>
+          </article>
+
+          <article class="faq-card">
+            <h3 class="faq-question">Do you also help with size &amp; placement?</h3>
+            <p>
+              Absolutely. Send a quick photo of the entrance, column or wall and we’ll
+              recommend ideal sizes and proportions so the sign feels integrated with the architecture.
+            </p>
+          </article>
+
+          <article class="faq-card">
+            <h3 class="faq-question">Can you match my agency branding?</h3>
+            <p>
+              As an architect and designer, we can echo your existing identity – typography, logo
+              or subtle brand marks – while keeping the piece timeless and homeowner-focused.
+            </p>
+          </article>
+
+          <article class="faq-card">
+            <h3 class="faq-question">What file types will I receive?</h3>
+            <p>
+              You’ll receive clean vector files (typically DXF/SVG/PDF) ready for laser cutting,
+              plus a high-resolution mockup image you can share with your client.
+            </p>
+          </article>
+        </div>
+      </section>
+
+      <!-- FORM / MAILERLITE EMBED -->
+      <section class="section" id="mockup">
+        <div class="form-section">
+          <div>
+            <div class="form-header-eyebrow">Get started</div>
+            <h2 class="form-title">Request your free custom mockup</h2>
+            <p class="form-sub">
+              Share a bit about your next closing and we’ll send back a personalized mockup
+              within 24 hours – no obligation to produce the piece.
+            </p>
+            <ul class="form-bullets">
+              <li><span>•</span> Ideal for a specific client, listing or upcoming closing</li>
+              <li><span>•</span> Choose any of our existing designs (e.g. Gatsby, cityscape, house numbers)</li>
+              <li><span>•</span> We’ll lay out the name or number and send a realistic preview</li>
+            </ul>
+            <p class="form-note">
+              We only ask for the essentials: your email and the text you’d like on the sign.
+              No long forms, no addresses required.
+            </p>
           </div>
-          <div class="faq-item">
-            <div class="faq-q">Can I see the design before I commit?</div>
-            <div class="faq-a">
-              Absolutely. Every project begins with a free mockup, so you and your client can approve the design
-              before we move into production.
+
+          <div class="form-card">
+            <div class="form-card-label">Free mockup request form</div>
+
+            <div class="form-card-placeholder">
+              <strong>Paste your MailerLite embed snippet here.</strong><br />
+              In MailerLite, go to <em>Forms → Realtor Mockup Requests → Embed → JavaScript snippet</em>,
+              copy the code and place it inside this card.
             </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q">Can you match my agency branding?</div>
-            <div class="faq-a">
-              Yes. As an architect and designer, I can adapt typography, layout and decorative elements to work with
-              your existing brand identity or logo.
-            </div>
-          </div>
-          <div class="faq-item">
-            <div class="faq-q">What size options are available?</div>
-            <div class="faq-a">
-              Most designs are available from 20 cm up to 110 cm (approx. 7.9&quot;–43.3&quot; diameter/height),
-              depending on the style. We’ll recommend ideal sizes based on placement (gate, facade, interior wall).
-            </div>
+
+            <!-- MAILERLITE EMBED CODE HERE -->
+            <!-- Example:
+            <script src="https://assets.mailerlite.com/js/universal.js" data-something></script>
+            <div class="ml-embedded" data-form="YOUR_FORM_ID"></div>
+            -->
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </main>
 
-    <!-- CONTACT -->
-    <section id="contact">
-      <div class="section-inner">
-        <div class="section-label">Get Started</div>
-        <h2 class="section-title">Request Your Free Mockup</h2>
-        <p class="section-sub">
-          Share a bit about your next closing or your brokerage, and we’ll follow up with a personalized mockup
-          and pricing details. No obligation, no pressure.
-        </p>
+    <footer class="footer">
+      © <span id="year"></span> Mundo Metal Art. Architect-designed custom metal art for modern homes &amp; realtors.
+    </footer>
+  </div>
 
-        <div class="contact-grid">
-          <div>
-            <!-- NOTE: form action şu an mailto. Dilersen bunu MailerLite formu ile değiştir. -->
-            <form action="mailto:hello@mundometalart.com" method="post" enctype="text/plain">
-              <div>
-                <label>
-                  Your name
-                  <input type="text" name="name" required />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Agency / Brokerage
-                  <input type="text" name="agency" />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Email
-                  <input type="email" name="email" required />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Phone (optional)
-                  <input type="text" name="phone" />
-                </label>
-              </div>
-              <div>
-                <label>
-                  Names / text to include on the design
-                  <textarea name="text"></textarea>
-                </label>
-              </div>
-              <div>
-                <label>
-                  Approximate size or placement
-                  <textarea name="size"></textarea>
-                </label>
-              </div>
-              <button type="submit" class="btn-primary">
-                <span class="icon">✉</span>
-                <span>Send Request</span>
-              </button>
-              <p class="contact-note">
-                You can also email us directly at <strong>hello@mundometalart.com</strong>.
-              </p>
-            </form>
-          </div>
-          <div>
-            <div class="feature-card">
-              <div class="feature-title">Designed by an Architect</div>
-              <p class="feature-text">
-                MundoMetalArt is led by an architect with a passion for metalwork and architectural
-                detailing. Each piece is created with the same care as a building facade or entryway.
-              </p>
-            </div>
-            <div style="height:10px;"></div>
-            <div class="feature-card">
-              <div class="feature-title">Perfect for Luxury Closings</div>
-              <p class="feature-text">
-                These pieces are ideal for high-end homes, estates and gated properties where the closing gift
-                needs to feel as premium as the property itself.
-              </p>
-            </div>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    <div class="footer-inner">
-      <div>© <span id="year"></span> MundoMetalArt. All rights reserved.</div>
-      <div>Architect-Designed Custom Metal Art for Modern Homes & Realtors.</div>
-    </div>
-  </footer>
-
-</div>
-
-<script>
-  document.getElementById('year').textContent = new Date().getFullYear();
-</script>
+  <script>
+    // simple dynamic year
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
