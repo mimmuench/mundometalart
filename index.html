@@ -139,7 +139,7 @@
 
     .hero-grid {
       display: grid;
-      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+      grid-template-columns: minmax(0, 1.2fr) minmax(0, 1.1fr);
       gap: 40px;
       align-items: center;
     }
@@ -222,6 +222,13 @@
       overflow: hidden;
     }
 
+    @media (min-width: 1024px) {
+      .hero-card {
+        transform: scale(1.06);
+        transform-origin: center;
+      }
+    }
+
     .hero-card-tag {
       position: absolute;
       top: 16px;
@@ -237,11 +244,11 @@
     }
 
     .hero-card-img {
-      border-radius: var(--radius-md);
+      border-radius: 18px;
       overflow: hidden;
       border: 1px solid rgba(15,23,42,0.9);
       margin-bottom: 12px;
-      aspect-ratio: 4 / 3;
+      aspect-ratio: 16 / 10;
     }
 
     .hero-card-img img {
@@ -250,24 +257,10 @@
       object-fit: cover;
     }
 
-    .hero-thumb-row {
-      display: flex;
-      gap: 8px;
-      margin-top: 6px;
-    }
-
-    .hero-thumb {
-      flex: 1;
-      border-radius: 10px;
-      overflow: hidden;
-      border: 1px solid rgba(15,23,42,0.9);
-      aspect-ratio: 4 / 3;
-    }
-
     .hero-card-caption {
       font-size: 12px;
       color: var(--muted);
-      margin-top: 8px;
+      margin-top: 4px;
     }
 
     .hero-card-caption strong { color: #e5e7eb; }
@@ -498,43 +491,43 @@
       .contact-grid { grid-template-columns: minmax(0,1fr); }
     }
 
-    form {
-      display: grid;
-      gap: 10px;
-    }
-
-    label {
-      font-size: 12px;
-      color: var(--muted);
-    }
-
-    input,
-    textarea {
-      margin-top: 4px;
-      padding: 8px 10px;
-      border-radius: 10px;
-      border: 1px solid rgba(148,163,184,0.5);
-      background: #020617;
-      color: var(--text);
-      font-size: 13px;
-      outline: none;
-    }
-
-    input:focus,
-    textarea:focus {
-      border-color: var(--accent);
-      box-shadow: 0 0 0 1px rgba(244,193,93,0.3);
-    }
-
-    textarea {
-      min-height: 110px;
-      resize: vertical;
-    }
-
     .contact-note {
       font-size: 12px;
       color: var(--muted);
       margin-top: 6px;
+    }
+
+    /* MailerLite theming */
+    .ml-embedded {
+      max-width: 380px;
+      margin-left: auto;
+      background: #020617;
+      border-radius: 18px;
+      padding: 20px 22px;
+      box-shadow: 0 20px 40px rgba(0,0,0,0.8);
+    }
+
+    .ml-embedded * {
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif !important;
+    }
+
+    .ml-embedded input,
+    .ml-embedded textarea,
+    .ml-embedded select {
+      background: #020617 !important;
+      border-radius: 10px !important;
+      border: 1px solid rgba(148,163,184,0.6) !important;
+      color: #e5e7eb !important;
+      font-size: 13px !important;
+    }
+
+    .ml-embedded button {
+      border-radius: 999px !important;
+      background: linear-gradient(135deg, #facc6b, #f97316) !important;
+      border: none !important;
+      color: #111827 !important;
+      font-weight: 600 !important;
+      padding: 10px 18px !important;
     }
 
     footer {
@@ -572,6 +565,7 @@
       <div class="nav-links">
         <a href="#features">For Realtors</a>
         <a href="#process">How it Works</a>
+        <a href="#formats">Formats</a>
         <a href="#pricing">Packages</a>
         <a href="#faq">FAQ</a>
         <a href="#contact">Contact</a>
@@ -603,7 +597,7 @@
             </a>
           </div>
           <p class="hero-note">
-            Designed by a professional architect. Custom names, estate titles, addresses &amp; agency branding available.
+            Designed by a professional architect. Custom names, estate titles, addresses &amp; subtle agency branding available.
           </p>
         </div>
         <div>
@@ -612,25 +606,14 @@
             <div class="hero-card-img">
               <img src="images/hero-main.png" alt="Custom metal estate sign on stone entrance" />
             </div>
-            <div class="hero-thumb-row">
-              <div class="hero-thumb">
-                <img src="images/hero-side-1.png" alt="Modern house number plaque on white façade" />
-              </div>
-              <div class="hero-thumb">
-                <img src="images/hero-side-2.png" alt="Gatsby style estate sign on stone column" />
-              </div>
-            </div>
             <p class="hero-card-caption">
               <strong>Premium estate signage</strong> – architect-designed metal pieces for luxury closings,
-              fully customizable with your client’s family name or estate title.
+              fully customizable with your client’s family name or estate title. Delivered with a realistic mockup within 24 hours.
             </p>
           </div>
         </div>
       </div>
     </section>
-
-    <!-- FEATURES -->
-    <!-- (BURADAN AŞAĞISI, Yedek dosyadakiyle aynı – sadece dokunmadım ki metin yükü artmasın) -->
 
     <!-- FEATURES -->
     <section id="features">
@@ -689,6 +672,53 @@
       </div>
     </section>
 
+    <!-- FORMATS -->
+    <section id="formats">
+      <div class="section-inner">
+        <div class="section-label">Choose Your Format</div>
+        <h2 class="section-title">Three Ways to Use MundoMetalArt</h2>
+        <p class="section-sub">
+          Most Realtors choose one of these three formats. If you’re not sure which fits your closing,
+          just tell us where the piece will hang and we’ll recommend the best option for that property.
+        </p>
+
+        <div class="feature-grid">
+          <div class="feature-card">
+            <div class="hero-thumb" style="margin-bottom:10px; border-radius:14px; overflow:hidden;">
+              <img src="images/hero-main.png" alt="Estate gate metal panel" />
+            </div>
+            <div class="feature-title">Estate Gate Panel</div>
+            <p class="feature-text">
+              Designed for gated driveways and estate entrances – a bold metal panel with the estate or family name,
+              visible from the street as guests arrive.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="hero-thumb" style="margin-bottom:10px; border-radius:14px; overflow:hidden;">
+              <img src="images/hero-side-1.png" alt="Front door name plaque" />
+            </div>
+            <div class="feature-title">Front Door Name Plaque</div>
+            <p class="feature-text">
+              A refined metal plaque sized for the main entrance – perfect next to the front door with the family name
+              and house number, welcoming guests home.
+            </p>
+          </div>
+
+          <div class="feature-card">
+            <div class="hero-thumb" style="margin-bottom:10px; border-radius:14px; overflow:hidden;">
+              <img src="images/hero-side-2.png" alt="Facade signature sign" />
+            </div>
+            <div class="feature-title">Facade Signature Sign</div>
+            <p class="feature-text">
+              Ideal for columns or façades – a signature metal sign that becomes a permanent part of the architecture
+              and frames the identity of the property.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
     <!-- PROCESS -->
     <section id="process">
       <div class="section-inner">
@@ -704,28 +734,29 @@
             <div class="step-num">Step 1</div>
             <div class="step-title">Share Your Client Details</div>
             <p class="step-text">
-              Send us the family name, estate title, address or branding you’d like to feature, plus an approximate size.
+              Tell us about the closing: client name, property style (modern, classic, farmhouse, estate),
+              where the piece will hang and what you’d like it to say.
             </p>
           </div>
           <div class="step-card">
             <div class="step-num">Step 2</div>
             <div class="step-title">Receive a Free Mockup</div>
             <p class="step-text">
-              We create a realistic design preview so you and your client can see exactly how the piece will look.
+              Within 24 hours we send a realistic mockup so you and your client can see exactly how the piece will look in context.
             </p>
           </div>
           <div class="step-card">
             <div class="step-num">Step 3</div>
             <div class="step-title">Approve &amp; Produce</div>
             <p class="step-text">
-              Once approved, we prepare production-ready files and craft the metal piece to spec.
+              Once approved, we prepare production-ready files and craft the metal piece to spec with your fabricator or ours.
             </p>
           </div>
           <div class="step-card">
             <div class="step-num">Step 4</div>
             <div class="step-title">Deliver the Moment</div>
             <p class="step-text">
-              The finished piece arrives ready to install – a luxury closing gift that becomes part of the home’s story.
+              The finished piece arrives ready to install – a luxury closing gift that becomes part of the home’s story and keeps your name in mind.
             </p>
           </div>
         </div>
@@ -831,59 +862,61 @@
     </section>
 
     <!-- CONTACT -->
-	<section id="contact">
-	  <div class="section-inner">
-		<div class="section-label">Get Started</div>
-		<h2 class="section-title">Request Your Free Mockup</h2>
-		<p class="section-sub">
-		  Share a bit about your next closing or your brokerage, and we’ll follow up with a personalized mockup
-		  and pricing details. No obligation, no pressure.
-		</p>
+    <section id="contact">
+      <div class="section-inner">
+        <div class="section-label">Get Started</div>
+        <h2 class="section-title">Request Your Free Mockup</h2>
+        <p class="section-sub">
+          Share a bit about your next closing or your brokerage, and we’ll follow up with a personalized mockup
+          and pricing details. No obligation, no pressure.
+        </p>
 
-		<div class="contact-grid">
+        <div class="contact-grid">
+          <div>
+            <div class="feature-card">
+              <div class="feature-title">What to Tell Us</div>
+              <p class="feature-text">
+                To create the best mockup for your client, it helps to share:
+                <br>• Property style (modern, classic, farmhouse, estate)
+                <br>• Where the piece will hang (gate, facade, front door, interior wall)
+                <br>• The text you’d like included (family name, estate title, house number)
+                <br>• Which format you prefer – Estate Gate Panel, Front Door Name Plaque or Facade Signature Sign –
+                  or let us recommend one.
+              </p>
+            </div>
 
-		  <!-- Sol taraftaki bilgilendirici kartlar (Aynen kalıyor) -->
-		  <div>
-			<div class="feature-card">
-			  <div class="feature-title">Designed by an Architect</div>
-			  <p class="feature-text">
-				MundoMetalArt is led by an architect with a passion for metalwork and architectural
-				detailing. Each piece is created with the same care as a building facade or entryway.
-			  </p>
-			</div>
+            <div style="height:10px;"></div>
 
-			<div style="height:10px;"></div>
+            <div class="feature-card">
+              <div class="feature-title">Designed for Busy U.S. Realtors</div>
+              <p class="feature-text">
+                You handle the relationship – we handle the design. Our goal is to give you a
+                signature closing gift that feels tailored to each transaction, without adding work to your plate.
+              </p>
+            </div>
+          </div>
 
-			<div class="feature-card">
-			  <div class="feature-title">Perfect for Luxury Closings</div>
-			  <p class="feature-text">
-				These pieces are ideal for high-end homes, estates and gated properties where the closing gift
-				needs to feel as premium as the property itself.
-			  </p>
-			</div>
-		  </div>
+          <div>
+            <!-- MailerLite Universal Script -->
+            <script>
+              (function(w,d,e,u,f,l,n){
+                  w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},
+                  l=d.createElement(e),l.async=1,l.src=u,
+                  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);
+              })(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
+              ml('account', '1967306');
+            </script>
 
-		  <!-- Sağ taraf: MailerLite Form (TAM & DOĞRU KOD) -->
-		  <div>
+            <!-- MailerLite Embedded Form Container -->
+            <div class="ml-embedded" data-form="jhteM6"></div>
 
-			<!-- MailerLite Universal Script -->
-			<script>
-			  (function(w,d,e,u,f,l,n){
-				  w[f]=w[f]||function(){(w[f].q=w[f].q||[]).push(arguments);},
-				  l=d.createElement(e),l.async=1,l.src=u,
-				  n=d.getElementsByTagName(e)[0],n.parentNode.insertBefore(l,n);
-			  })(window,document,'script','https://assets.mailerlite.com/js/universal.js','ml');
-			  ml('account', '1967306');
-			</script>
-
-			<!-- MailerLite Embedded Form Container -->
-			<div class="ml-embedded" data-form="jhteM6"></div>
-
-		  </div>
-
-		</div>
-	  </div>
-	</section>
+            <p class="contact-note">
+              In your message, feel free to include MLS links or photos of the property so we can align the design with the architecture.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
   </main>
 
   <footer>
