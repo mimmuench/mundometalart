@@ -141,6 +141,45 @@ def cmd_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def _render(mask, width: int = 46, height: int = 20) -> list[str]:
+    """Draw a stored silhouette as text, so a build log can show what the
+    extractor actually found in a photo we cannot open from here."""
+    import numpy as np
+    from PIL import Image as PILImage
+
+    small = np.asarray(
+        PILImage.fromarray((mask * 255).astype("uint8"), "L").resize(
+            (width, height), PILImage.BILINEAR
+        )
+    ) > 127
+    return ["".join("#" if v else "." for v in row) for row in small]
+
+
+def _explain(index, catalog: dict, pairs: list, count: int = 4) -> None:
+    """Show the silhouettes behind the closest collisions, side by side.
+
+    A distance alone cannot say whether two listings share a design or the
+    extractor grabbed the same sofa out of two lifestyle shots.
+    """
+    urls = {
+        listing["id"]: listing["image_urls"] for listing in catalog["listings"]
+    }
+    by_key = {(lid, idx): fp for lid, idx, fp in index.entries}
+    print("\nwhat the extractor found in the closest pairs:")
+    for shape_px, mine, mine_idx, other, other_idx in pairs[:count]:
+        left = by_key.get((mine, mine_idx))
+        right = by_key.get((other, other_idx))
+        if left is None or right is None:
+            continue
+        print(f"\n  {shape_px:.2f}px apart")
+        print(f"    L {mine[:40]} [image {mine_idx}]")
+        print(f"      {(urls.get(mine) or [''])[mine_idx] if mine_idx < len(urls.get(mine, [])) else ''}")
+        print(f"    R {other[:40]} [image {other_idx}]")
+        print(f"      {(urls.get(other) or [''])[other_idx] if other_idx < len(urls.get(other, [])) else ''}")
+        for row_l, row_r in zip(_render(left.area_mask), _render(right.area_mask)):
+            print(f"    {row_l}   {row_r}")
+
+
 def cmd_selfcheck(args: argparse.Namespace) -> int:
     """Measure how alike our own designs are.
 
@@ -168,7 +207,10 @@ def cmd_selfcheck(args: argparse.Namespace) -> int:
         probe = index.entries[position][2]
         match = index.best_match(probe, exclude_listing=listing_id)
         if match is not None and match.shape_px <= REVIEW_PX:
-            collisions.append((match.shape_px, listing_id, match.listing_id, match.verdict))
+            collisions.append(
+                (match.shape_px, listing_id, index.entries[position][1],
+                 match.listing_id, match.image_index, match.verdict)
+            )
 
     collisions.sort()
     confusable = [c for c in collisions if c[0] <= DESIGN_MATCH_PX]
@@ -176,8 +218,12 @@ def cmd_selfcheck(args: argparse.Namespace) -> int:
           f"{DESIGN_MATCH_PX}px of a different design of ours "
           f"({len(confusable) / max(len(firsts), 1):.1%})")
     print(f"{len(collisions)} sit within the {REVIEW_PX}px review band\n")
-    for shape_px, mine, other, verdict in collisions[:15]:
-        print(f"  {shape_px:5.2f}px  {verdict:13s} {mine[:34]:34s} ~ {other[:34]}")
+    for shape_px, mine, mine_idx, other, other_idx, verdict in collisions[:15]:
+        print(f"  {shape_px:5.2f}px  {verdict:13s} {mine[:32]:32s} [{mine_idx}] "
+              f"~ {other[:32]} [{other_idx}]")
+
+    catalog = json.loads(CATALOG_PATH.read_text(encoding="utf-8"))
+    _explain(index, catalog, [(c[0], c[1], c[2], c[3], c[4]) for c in collisions])
     return 0
 
 
