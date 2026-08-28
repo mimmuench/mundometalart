@@ -158,10 +158,7 @@ def cmd_selfcheck(args: argparse.Namespace) -> int:
     collisions = []
     for listing_id, position in firsts.items():
         probe = index.entries[position][2]
-        others = CatalogIndex(
-            [e for e in index.entries if e[0] != listing_id]
-        )
-        match = others.best_match(probe)
+        match = index.best_match(probe, exclude_listing=listing_id)
         if match is not None and match.shape_px <= REVIEW_PX:
             collisions.append((match.shape_px, listing_id, match.listing_id, match.verdict))
 

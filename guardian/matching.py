@@ -82,7 +82,7 @@ class CatalogIndex:
     def __len__(self) -> int:
         return len(self.entries)
 
-    def _area_scores(self, probe: Fingerprint) -> np.ndarray:
+    def _area_scores(self, probe: Fingerprint, exclude_listing: str | None) -> np.ndarray:
         """Vectorised IoU against every catalog image, better of two mirrorings.
 
         This stage only has to keep the real match somewhere in the shortlist;
@@ -96,14 +96,27 @@ class CatalogIndex:
             with np.errstate(divide="ignore", invalid="ignore"):
                 iou = np.where(union > 0, intersection / union, 0.0)
             best = np.maximum(best, iou)
+        if exclude_listing is not None:
+            for position, (listing_id, _, _) in enumerate(self.entries):
+                if listing_id == exclude_listing:
+                    best[position] = -1.0
         return best
 
-    def best_match(self, probe: Fingerprint) -> Match | None:
-        """The closest design we own, with the verdict for it."""
+    def best_match(
+        self, probe: Fingerprint, exclude_listing: str | None = None
+    ) -> Match | None:
+        """The closest design we own, with the verdict for it.
+
+        `exclude_listing` holds one listing out of the comparison, which is
+        what asking "what else does this design resemble?" requires.
+        """
         if not self.entries:
             return None
 
-        order = np.argsort(-self._area_scores(probe))[:SHORTLIST_AREA]
+        scores = self._area_scores(probe, exclude_listing)
+        order = [i for i in np.argsort(-scores)[:SHORTLIST_AREA] if scores[i] >= 0.0]
+        if not order:
+            return None
 
         # Contour distance without the rotation search: cheap, and enough to
         # rank. The expensive aligned comparison then runs on the survivors.
