@@ -16,6 +16,7 @@ from guardian.matching import (
     DESIGN_MATCH_PX,
     CatalogIndex,
     VERDICT_CLEAR,
+    find_boilerplate,
 )
 from guardian.tests.synth import design_mask, photograph
 
@@ -85,6 +86,40 @@ def test_watermark_does_not_hide_a_copy() -> None:
     check(match.is_hit, f"verdict {match.verdict} at {match.shape_px:.2f}px")
 
 
+def test_shop_furniture_is_dropped_but_designs_are_kept() -> None:
+    print("a size chart repeated across listings is not indexed as a design")
+    import io
+
+    from PIL import Image, ImageDraw
+
+    chart = Image.new("RGB", (600, 400), (250, 250, 248))
+    draw = ImageDraw.Draw(chart)
+    for y in range(60, 340, 45):
+        draw.rectangle((60, y, 540, y + 30), outline=(30, 30, 30), width=2)
+    draw.text((70, 20), "SIZE GUIDE 24in / 32in / 40in", fill=(20, 20, 20))
+
+    def recompressed(quality: int) -> Image.Image:
+        buf = io.BytesIO()
+        chart.save(buf, format="JPEG", quality=quality)
+        buf.seek(0)
+        return Image.open(buf).convert("RGB")
+
+    entries = []
+    for family in ("mountain", "creature", "botanical"):
+        for seed in range(1, 7):
+            listing_id = f"{family}-{seed}"
+            entries.append(
+                (listing_id, 0, fingerprint(photograph(design_mask(family, seed), seed=seed)))
+            )
+            # Etsy re-encodes per listing, so the chart is never byte-identical.
+            entries.append((listing_id, 1, fingerprint(recompressed(60 + seed * 4))))
+
+    charts = {i for i, entry in enumerate(entries) if entry[1] == 1}
+    flagged = find_boilerplate(entries)
+    check(charts <= flagged, f"all {len(charts)} charts flagged")
+    check(not (flagged - charts), f"{len(flagged - charts)} designs wrongly flagged")
+
+
 def test_index_survives_a_round_trip() -> None:
     print("the index reloads from disk unchanged")
     index = catalog_index(seeds=range(1, 4))
@@ -126,6 +161,7 @@ def main() -> int:
         test_reshot_copy_is_found,
         test_unrelated_design_is_cleared,
         test_watermark_does_not_hide_a_copy,
+        test_shop_furniture_is_dropped_but_designs_are_kept,
         test_index_survives_a_round_trip,
         test_search_queries_name_the_design,
     ):

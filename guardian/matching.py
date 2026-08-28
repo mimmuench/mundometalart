@@ -33,6 +33,45 @@ VERDICT_DESIGN_MATCH = "design_match"
 VERDICT_REVIEW = "review"
 VERDICT_CLEAR = "clear"
 
+# Reuse leaves a near-zero hash distance, so this stays far below the range
+# where genuinely similar designs start colliding. Measured: every recompressed
+# duplicate is caught at 6 bits or less, and real designs first get swept up at
+# 8, so 4 sits clear of both edges.
+BOILERPLATE_BITS = 4
+BOILERPLATE_LISTINGS = 3
+
+
+def find_boilerplate(
+    entries: list[tuple[str, int, Fingerprint]],
+    *,
+    bits: int = BOILERPLATE_BITS,
+    min_listings: int = BOILERPLATE_LISTINGS,
+) -> set[int]:
+    """Positions of images that are shop furniture rather than a design.
+
+    A listing's later photos are often the same size chart, hanging diagram
+    or packaging shot pasted into every listing. Indexed as designs, they
+    make unrelated products look identical to each other — and worse, they
+    would match the equivalent boilerplate in a stranger's listing and
+    report an innocent seller.
+
+    They identify themselves: a design belongs to one listing, so an image
+    that recurs across several of ours is not a design.
+    """
+    hashes = [fp.phash for _, _, fp in entries]
+    listings = [listing_id for listing_id, _, _ in entries]
+    boilerplate: set[int] = set()
+    for i, hash_i in enumerate(hashes):
+        seen = {listings[i]}
+        group = [i]
+        for j, hash_j in enumerate(hashes):
+            if j != i and hamming(hash_i, hash_j) <= bits:
+                seen.add(listings[j])
+                group.append(j)
+        if len(seen) >= min_listings:
+            boilerplate.update(group)
+    return boilerplate
+
 
 @dataclass
 class Match:

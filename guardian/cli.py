@@ -20,6 +20,7 @@ from guardian.matching import (
     DESIGN_MATCH_PX,
     REVIEW_PX,
     CatalogIndex,
+    find_boilerplate,
 )
 
 DATA = Path(__file__).resolve().parent / "data"
@@ -105,6 +106,13 @@ def cmd_index(args: argparse.Namespace) -> int:
     if designs:
         print(f"added {len(designs)} design files ({linked} matched to a listing "
               f"by name, {len(designs) - linked} kept under their own name)")
+
+    boilerplate = find_boilerplate(entries)
+    if boilerplate:
+        dropped = sorted({entries[i][0] for i in boilerplate})
+        entries = [e for i, e in enumerate(entries) if i not in boilerplate]
+        print(f"dropped {len(boilerplate)} boilerplate images (size charts and "
+              f"the like, recurring across {len(dropped)} listings)")
 
     index = CatalogIndex(entries)
     INDEX_PATH.write_text(json.dumps(index.to_json()), encoding="utf-8")
