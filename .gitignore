@@ -1,0 +1,6 @@
+# Guardian working data — never commit downloaded imagery or generated reports.
+guardian/data/
+guardian/out/
+__pycache__/
+*.pyc
+.venv/

@@ -1,0 +1,41 @@
+name: Guardian — rebuild catalog index
+
+on:
+  workflow_dispatch:
+  push:
+    paths:
+      - "guardian/**"
+      - ".github/workflows/guardian-index.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  index:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+
+      - name: Regression tests
+        run: python -m guardian.tests.test_pipeline
+
+      - name: Build catalog from the Etsy export
+        run: python -m guardian.cli catalog guardian/catalog/etsy_listings.csv
+
+      - name: Fingerprint listing photos
+        run: python -m guardian.cli index --images-per-listing 3 --workers 12
+
+      - name: Publish the index
+        uses: actions/upload-artifact@v4
+        with:
+          name: guardian-index
+          path: guardian/data/index.json
+          retention-days: 30

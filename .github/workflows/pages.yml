@@ -21,10 +21,19 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      # Publish only the site itself. Uploading the repository root would
+      # serve everything in it from mundometalart.com, including the catalog
+      # export and the monitoring tooling.
+      - name: Assemble site
+        run: |
+          mkdir -p _site
+          cp index.html CNAME _site/
+          cp -r images _site/
+
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: _site
 
   deploy:
     environment:
