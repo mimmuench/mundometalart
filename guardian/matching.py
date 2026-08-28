@@ -40,6 +40,22 @@ VERDICT_CLEAR = "clear"
 BOILERPLATE_BITS = 4
 BOILERPLATE_LISTINGS = 3
 
+# A laser-cut piece is defined by its negative space; a sofa, a panel or an
+# accent wall is a solid mass. Measured on rendered shapes, designs fill at
+# most 0.66 of their own bounding box and solid objects at least 0.99, so
+# this sits in the gap with room for designs more filled than any we render.
+ARTWORK_MAX_FILL = 0.88
+
+
+def looks_like_artwork(fp: Fingerprint) -> bool:
+    """Whether the extractor plausibly found a cut piece rather than scenery.
+
+    Staged room photos do not always give the artwork up, and a shape we
+    cannot trust is worse than no shape: it accuses the wrong seller. Where
+    this fails, the photo is skipped rather than guessed at.
+    """
+    return fp.ink_ratio <= ARTWORK_MAX_FILL
+
 
 def find_boilerplate(
     entries: list[tuple[str, int, Fingerprint]],

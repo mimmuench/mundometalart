@@ -137,6 +137,22 @@ def test_shop_furniture_is_dropped_but_designs_are_kept() -> None:
     check(not (flagged - charts), f"{len(flagged - charts)} designs wrongly flagged")
 
 
+def test_scenery_is_refused_rather_than_guessed_at() -> None:
+    print("a shape we cannot trust is skipped, not reported")
+    from PIL import Image, ImageDraw
+
+    from guardian.matching import looks_like_artwork
+
+    scenery = Image.new("RGB", (700, 700), (234, 232, 228))
+    ImageDraw.Draw(scenery).rounded_rectangle(
+        (80, 200, 620, 520), radius=40, fill=(40, 38, 36)
+    )
+    check(not looks_like_artwork(fingerprint(scenery)), "a solid mass is refused")
+    for family in ("mountain", "creature", "botanical"):
+        piece = fingerprint(photograph(design_mask(family, 3), seed=3))
+        check(looks_like_artwork(piece), f"{family} is accepted ({piece.ink_ratio:.2f} fill)")
+
+
 def test_index_survives_a_round_trip() -> None:
     print("the index reloads from disk unchanged")
     index = catalog_index(seeds=range(1, 4))
@@ -180,6 +196,7 @@ def main() -> int:
         test_unrelated_design_is_cleared,
         test_watermark_does_not_hide_a_copy,
         test_shop_furniture_is_dropped_but_designs_are_kept,
+        test_scenery_is_refused_rather_than_guessed_at,
         test_index_survives_a_round_trip,
         test_search_queries_name_the_design,
     ):

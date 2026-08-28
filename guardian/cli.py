@@ -21,6 +21,7 @@ from guardian.matching import (
     REVIEW_PX,
     CatalogIndex,
     find_boilerplate,
+    looks_like_artwork,
 )
 
 DATA = Path(__file__).resolve().parent / "data"
@@ -107,6 +108,12 @@ def cmd_index(args: argparse.Namespace) -> int:
         print(f"added {len(designs)} design files ({linked} matched to a listing "
               f"by name, {len(designs) - linked} kept under their own name)")
 
+    unreadable = [e for e in entries if not looks_like_artwork(e[2])]
+    if unreadable:
+        entries = [e for e in entries if looks_like_artwork(e[2])]
+        print(f"skipped {len(unreadable)} photos the artwork could not be "
+              f"isolated from (staged scenes, mostly)")
+
     boilerplate = find_boilerplate(entries)
     if boilerplate:
         dropped = sorted({entries[i][0] for i in boilerplate})
@@ -129,6 +136,10 @@ def cmd_check(args: argparse.Namespace) -> int:
     print(f"index holds {len(index)} images\n")
     for image_path in args.images:
         probe = fingerprint(load_image(image_path))
+        if not looks_like_artwork(probe):
+            print(f"{image_path}\n  -> skipped, no artwork could be isolated "
+                  f"(fill {probe.ink_ratio:.2f})")
+            continue
         match = index.best_match(probe)
         if match is None:
             print(f"{image_path}: index empty")
