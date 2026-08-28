@@ -14,7 +14,7 @@ from pathlib import Path
 
 from guardian.etsy_catalog import build_catalog
 from guardian.fingerprint import fingerprint, load_image
-from guardian.imagery import etsy_downscaled, fetch_many
+from guardian.imagery import Unreachable, etsy_downscaled, fetch_many
 from guardian.matching import CatalogIndex
 
 DATA = Path(__file__).resolve().parent / "data"
@@ -53,8 +53,17 @@ def cmd_index(args: argparse.Namespace) -> int:
         for position, url in enumerate(urls):
             wanted.append((listing["id"], position, etsy_downscaled(url)))
 
+    if args.limit:
+        wanted = wanted[: args.limit]
+
     print(f"fetching {len(wanted)} images for {catalog['listing_count']} listings...")
-    downloaded = fetch_many([url for _, _, url in wanted], IMAGE_CACHE, workers=args.workers)
+    try:
+        downloaded = fetch_many(
+            [url for _, _, url in wanted], IMAGE_CACHE, workers=args.workers
+        )
+    except Unreachable as exc:
+        print(f"error: {exc}", file=sys.stderr)
+        return 1
 
     entries = []
     failures = 0
@@ -108,6 +117,9 @@ def main(argv: list[str] | None = None) -> int:
     p_index.add_argument("--images-per-listing", type=int, default=3,
                          help="0 for every image (default: 3)")
     p_index.add_argument("--workers", type=int, default=8)
+    p_index.add_argument("--limit", type=int, default=0,
+                         help="stop after this many images; use a small value to "
+                              "check the host is reachable before a full run")
     p_index.set_defaults(func=cmd_index)
 
     p_check = sub.add_parser("check", help="match images against the index")

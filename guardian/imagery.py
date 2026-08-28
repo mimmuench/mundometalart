@@ -8,16 +8,25 @@ full-resolution original would cost bandwidth we never use.
 from __future__ import annotations
 
 import hashlib
+import sys
 import time
 import urllib.error
 import urllib.request
-from concurrent.futures import ThreadPoolExecutor
+from collections import Counter
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
 
 USER_AGENT = "mundometalart-guardian/0.1 (catalog self-monitoring)"
 ETSY_VARIANT = "il_794xN"
-TIMEOUT = 30
-RETRIES = 4
+TIMEOUT = 15
+RETRIES = 3
+# If this many downloads fail before a single one succeeds, the host is
+# refusing us and grinding through the rest just burns an hour to learn it.
+PROBE_FAILURES = 25
+
+
+class Unreachable(RuntimeError):
+    """The image host rejected everything we asked it for."""
 
 
 def etsy_downscaled(url: str, variant: str = ETSY_VARIANT) -> str:
@@ -33,13 +42,19 @@ def cache_path(url: str, root: Path) -> Path:
     return root / digest[:2] / f"{digest}{suffix}"
 
 
-def fetch(url: str, root: Path, *, force: bool = False) -> Path | None:
-    """Download one image, or return the cached copy. None if unreachable."""
+def fetch(url: str, root: Path, *, force: bool = False) -> tuple[Path | None, str]:
+    """Download one image, or return the cached copy.
+
+    Returns the path and an empty reason on success, or None and the reason
+    it gave up — callers report those reasons rather than a bare count, since
+    "403 from the CDN" and "timed out" need completely different responses.
+    """
     target = cache_path(url, root)
     if target.exists() and target.stat().st_size > 0 and not force:
-        return target
+        return target, ""
     target.parent.mkdir(parents=True, exist_ok=True)
     request = urllib.request.Request(url, headers={"User-Agent": USER_AGENT})
+    reason = "unknown"
     for attempt in range(RETRIES):
         try:
             with urllib.request.urlopen(request, timeout=TIMEOUT) as response:
@@ -47,18 +62,59 @@ def fetch(url: str, root: Path, *, force: bool = False) -> Path | None:
             if not payload:
                 raise OSError("empty response")
             target.write_bytes(payload)
-            return target
-        except (urllib.error.URLError, OSError, TimeoutError):
-            if attempt == RETRIES - 1:
-                return None
+            return target, ""
+        except urllib.error.HTTPError as exc:
+            reason = f"HTTP {exc.code}"
+            if exc.code in (401, 403, 404, 410):
+                return None, reason  # a refusal will not change on retry
+        except urllib.error.URLError as exc:
+            reason = f"{type(exc.reason).__name__ if exc.reason else 'URLError'}"
+        except (TimeoutError, OSError) as exc:
+            reason = type(exc).__name__
+        if attempt < RETRIES - 1:
             time.sleep(2**attempt)
-    return None
+    return None, reason
 
 
 def fetch_many(
-    urls: list[str], root: Path, *, workers: int = 8, force: bool = False
+    urls: list[str],
+    root: Path,
+    *,
+    workers: int = 8,
+    force: bool = False,
+    progress_every: int = 50,
 ) -> dict[str, Path | None]:
+    """Download a batch, reporting as it goes and bailing out if it is futile."""
     root.mkdir(parents=True, exist_ok=True)
+    results: dict[str, Path | None] = {}
+    reasons: Counter[str] = Counter()
+    done = succeeded = 0
+
     with ThreadPoolExecutor(max_workers=workers) as pool:
-        results = list(pool.map(lambda u: fetch(u, root, force=force), urls))
-    return dict(zip(urls, results))
+        futures = {pool.submit(fetch, url, root, force=force): url for url in urls}
+        for future in as_completed(futures):
+            url = futures[future]
+            path, reason = future.result()
+            results[url] = path
+            done += 1
+            if path is not None:
+                succeeded += 1
+            else:
+                reasons[reason] += 1
+
+            if done % progress_every == 0 or done == len(urls):
+                print(f"  {done}/{len(urls)} fetched ({succeeded} ok)", flush=True)
+
+            if succeeded == 0 and done >= PROBE_FAILURES:
+                for pending in futures:
+                    pending.cancel()
+                top = ", ".join(f"{r} x{n}" for r, n in reasons.most_common(3))
+                raise Unreachable(
+                    f"{done} downloads attempted, none succeeded ({top}). "
+                    "The image host is refusing this network."
+                )
+
+    if reasons:
+        top = ", ".join(f"{r} x{n}" for r, n in reasons.most_common(3))
+        print(f"  {len(urls) - succeeded} failed: {top}", file=sys.stderr, flush=True)
+    return results
