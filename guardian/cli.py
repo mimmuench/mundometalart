@@ -12,12 +12,14 @@ import json
 import sys
 from pathlib import Path
 
+from guardian.designs import design_name, find_designs, link_to_listing
 from guardian.etsy_catalog import build_catalog
 from guardian.fingerprint import fingerprint, load_image
 from guardian.imagery import Unreachable, etsy_downscaled, fetch_many
 from guardian.matching import CatalogIndex
 
 DATA = Path(__file__).resolve().parent / "data"
+DESIGNS = DATA / "designs"
 CATALOG_PATH = DATA / "catalog.json"
 INDEX_PATH = DATA / "index.json"
 IMAGE_CACHE = DATA / "images"
@@ -62,8 +64,10 @@ def cmd_index(args: argparse.Namespace) -> int:
             [url for _, _, url in wanted], IMAGE_CACHE, workers=args.workers
         )
     except Unreachable as exc:
-        print(f"error: {exc}", file=sys.stderr)
-        return 1
+        # Our own design files are the better reference anyway, so a blocked
+        # CDN degrades the index rather than failing the build.
+        print(f"warning: {exc}", file=sys.stderr)
+        downloaded = {}
 
     entries = []
     failures = 0
@@ -77,6 +81,26 @@ def cmd_index(args: argparse.Namespace) -> int:
         except Exception as exc:  # a corrupt download should not stop the build
             print(f"  skipped {url}: {exc}", file=sys.stderr)
             failures += 1
+
+    # Clean design files, when we have them, are the better reference and are
+    # indexed alongside the photographs rather than instead of them: a copy
+    # may resemble either our artwork or our particular photograph of it.
+    designs = find_designs(Path(args.designs) if args.designs else DESIGNS)
+    linked = 0
+    for position, path in enumerate(designs):
+        listing_id, _ = link_to_listing(path, catalog["listings"])
+        if listing_id is not None:
+            linked += 1
+        try:
+            entries.append(
+                (listing_id or f"design:{design_name(path)}", 100 + position,
+                 fingerprint(load_image(path)))
+            )
+        except Exception as exc:
+            print(f"  skipped {path.name}: {exc}", file=sys.stderr)
+    if designs:
+        print(f"added {len(designs)} design files ({linked} matched to a listing "
+              f"by name, {len(designs) - linked} kept under their own name)")
 
     index = CatalogIndex(entries)
     INDEX_PATH.write_text(json.dumps(index.to_json()), encoding="utf-8")
@@ -117,6 +141,8 @@ def main(argv: list[str] | None = None) -> int:
     p_index.add_argument("--images-per-listing", type=int, default=3,
                          help="0 for every image (default: 3)")
     p_index.add_argument("--workers", type=int, default=8)
+    p_index.add_argument("--designs", default=None,
+                         help=f"folder of clean design files (default: {DESIGNS})")
     p_index.add_argument("--limit", type=int, default=0,
                          help="stop after this many images; use a small value to "
                               "check the host is reachable before a full run")
