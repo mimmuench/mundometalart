@@ -65,6 +65,38 @@ These numbers come from synthetic renders, not photographs. They are honest
 about the *relative* difficulty of each case, but the absolute thresholds are
 due a recalibration against real copies once we have caught a few.
 
+## Where this stands against the real catalog
+
+The engine works when the reference is clean. Given a design file, it found
+that design again in a photograph taken on someone else's wall, mirrored,
+tilted, cropped and recompressed — 1.04px, while the image hashes were 36
+bits apart, meaning a reverse image search would have found nothing. That is
+the case this project exists for.
+
+Building the reference *from our own Etsy photos* is the unsolved part. Most
+of them are staged room shots, and pulling the artwork out of a furnished
+room went four layers deep:
+
+1. The largest dark mass in a room is the sofa. Fixed by picking the piece
+   that touches no border instead of the biggest one.
+2. What surfaced underneath were near-solid masses. A cut piece is mostly
+   gaps, so a fill-ratio gate was added at 0.88.
+3. That gate is dead. Measured on the real catalog, the shapes still
+   colliding fill 0.56 to 0.68 of their box — the middle of the range real
+   designs occupy. No threshold on this signal separates them.
+
+So 16% of listings still resolve to a shape that is not their design. The
+gate is kept because it does reject pure solids, but it does not close this.
+
+**Design files close it.** No room, no sofa, no shadow, nothing to infer —
+which is why `designs.py` exists and why the folder is worth filling.
+
+One finding is not a defect: some of our own designs genuinely resemble each
+other. `american-heritage-garage-sign` and `custom-metal-garage-sign` sit
+2.04px apart, and the desert and cactus pieces cluster tightly. Even with a
+perfect reference, those need a person to look rather than an automatic
+verdict, which is what the `review` band is for.
+
 ## Running it
 
 ```sh

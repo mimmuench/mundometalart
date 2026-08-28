@@ -1,11 +1,9 @@
 name: Guardian — rebuild catalog index
 
+# Run on request. A full build fetches 687 photos and takes about twelve
+# minutes, which is not something every commit should trigger.
 on:
   workflow_dispatch:
-  push:
-    paths:
-      - "guardian/**"
-      - ".github/workflows/guardian-index.yml"
 
 permissions:
   contents: read
