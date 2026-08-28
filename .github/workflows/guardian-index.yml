@@ -33,6 +33,11 @@ jobs:
       - name: Fingerprint listing photos
         run: python -m guardian.cli index --images-per-listing 3 --workers 12
 
+      # The thresholds were set on rendered shapes; this is the check against
+      # the real catalog, and its output belongs in the log where we can read it.
+      - name: How alike are our own designs?
+        run: python -m guardian.cli selfcheck
+
       - name: Publish the index
         uses: actions/upload-artifact@v4
         with:

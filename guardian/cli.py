@@ -16,7 +16,11 @@ from guardian.designs import design_name, find_designs, link_to_listing
 from guardian.etsy_catalog import build_catalog
 from guardian.fingerprint import fingerprint, load_image
 from guardian.imagery import Unreachable, etsy_downscaled, fetch_many
-from guardian.matching import CatalogIndex
+from guardian.matching import (
+    DESIGN_MATCH_PX,
+    REVIEW_PX,
+    CatalogIndex,
+)
 
 DATA = Path(__file__).resolve().parent / "data"
 DESIGNS = DATA / "designs"
@@ -129,6 +133,49 @@ def cmd_check(args: argparse.Namespace) -> int:
     return 0
 
 
+def cmd_selfcheck(args: argparse.Namespace) -> int:
+    """Measure how alike our own designs are.
+
+    The thresholds were calibrated on rendered shapes. This asks the only
+    question those renders cannot: across the real catalog, how close does
+    one of our designs come to a *different* one of our designs? Anything
+    under the match threshold here is a pair the scanner will confuse, and
+    it is better to learn which pairs those are now than from a takedown
+    aimed at the wrong seller.
+    """
+    if not INDEX_PATH.exists():
+        print(f"no index at {INDEX_PATH}; run `index` first", file=sys.stderr)
+        return 1
+    index = CatalogIndex.from_json(json.loads(INDEX_PATH.read_text(encoding="utf-8")))
+    print(f"index holds {len(index)} images across "
+          f"{len({e[0] for e in index.entries})} listings\n")
+
+    # One image per listing keeps this to a single pass over the catalog.
+    firsts: dict[str, int] = {}
+    for position, (listing_id, _, _) in enumerate(index.entries):
+        firsts.setdefault(listing_id, position)
+
+    collisions = []
+    for listing_id, position in firsts.items():
+        probe = index.entries[position][2]
+        others = CatalogIndex(
+            [e for e in index.entries if e[0] != listing_id]
+        )
+        match = others.best_match(probe)
+        if match is not None and match.shape_px <= REVIEW_PX:
+            collisions.append((match.shape_px, listing_id, match.listing_id, match.verdict))
+
+    collisions.sort()
+    confusable = [c for c in collisions if c[0] <= DESIGN_MATCH_PX]
+    print(f"{len(confusable)} of {len(firsts)} designs sit within "
+          f"{DESIGN_MATCH_PX}px of a different design of ours "
+          f"({len(confusable) / max(len(firsts), 1):.1%})")
+    print(f"{len(collisions)} sit within the {REVIEW_PX}px review band\n")
+    for shape_px, mine, other, verdict in collisions[:15]:
+        print(f"  {shape_px:5.2f}px  {verdict:13s} {mine[:34]:34s} ~ {other[:34]}")
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="guardian", description=__doc__)
     sub = parser.add_subparsers(dest="command", required=True)
@@ -147,6 +194,9 @@ def main(argv: list[str] | None = None) -> int:
                          help="stop after this many images; use a small value to "
                               "check the host is reachable before a full run")
     p_index.set_defaults(func=cmd_index)
+
+    p_self = sub.add_parser("selfcheck", help="how alike are our own designs?")
+    p_self.set_defaults(func=cmd_selfcheck)
 
     p_check = sub.add_parser("check", help="match images against the index")
     p_check.add_argument("images", nargs="+")
