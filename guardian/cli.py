@@ -132,6 +132,8 @@ def cmd_check(args: argparse.Namespace) -> int:
     if not INDEX_PATH.exists():
         print(f"no index at {INDEX_PATH}; run `index` first", file=sys.stderr)
         return 1
+    import numpy as np
+
     index = CatalogIndex.from_json(json.loads(INDEX_PATH.read_text(encoding="utf-8")))
     print(f"index holds {len(index)} images\n")
     for image_path in args.images:
@@ -182,7 +184,7 @@ def _explain(index, catalog: dict, pairs: list, count: int = 4) -> None:
         right = by_key.get((other, other_idx))
         if left is None or right is None:
             continue
-        print(f"\n  {shape_px:.2f}px apart")
+        print(f"\n  {shape_px:.2f}px apart  (fill {left.ink_ratio:.2f} vs {right.ink_ratio:.2f})")
         print(f"    L {mine[:40]} [image {mine_idx}]")
         print(f"      {(urls.get(mine) or [''])[mine_idx] if mine_idx < len(urls.get(mine, [])) else ''}")
         print(f"    R {other[:40]} [image {other_idx}]")
@@ -204,6 +206,8 @@ def cmd_selfcheck(args: argparse.Namespace) -> int:
     if not INDEX_PATH.exists():
         print(f"no index at {INDEX_PATH}; run `index` first", file=sys.stderr)
         return 1
+    import numpy as np
+
     index = CatalogIndex.from_json(json.loads(INDEX_PATH.read_text(encoding="utf-8")))
     print(f"index holds {len(index)} images across "
           f"{len({e[0] for e in index.entries})} listings\n")
@@ -212,6 +216,16 @@ def cmd_selfcheck(args: argparse.Namespace) -> int:
     firsts: dict[str, int] = {}
     for position, (listing_id, _, _) in enumerate(index.entries):
         firsts.setdefault(listing_id, position)
+
+    fills = np.array([fp.ink_ratio for _, _, fp in index.entries])
+    print("fill ratio across the real catalog "
+          "(a cut piece is mostly gaps; scenery is mostly mass):")
+    edges = [0.0, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.01]
+    for low, high in zip(edges, edges[1:]):
+        count = int(((fills >= low) & (fills < high)).sum())
+        bar = "#" * round(60 * count / max(len(fills), 1))
+        print(f"  {low:.1f}-{high:.1f}  {count:4d}  {bar}")
+    print()
 
     collisions = []
     for listing_id, position in firsts.items():
