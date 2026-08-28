@@ -130,3 +130,29 @@ def photograph(
         buf.seek(0)
         scene = Image.open(buf).convert("RGB")
     return scene
+
+
+def room_scene(mask: Image.Image, *, seed: int = 0, art_scale: float = 0.34) -> Image.Image:
+    """A listing photo of the staged kind: the piece on a wall, above furniture.
+
+    The furniture is the largest dark mass in the frame and runs off the
+    bottom and sides, which is exactly the arrangement that made unrelated
+    listings share a silhouette.
+    """
+    rng = random.Random(seed)
+    size = 700
+    wall = (rng.randint(214, 240),) * 3
+    scene = Image.new("RGB", (size, size), wall)
+    draw = ImageDraw.Draw(scene)
+
+    # A sofa across the bottom, bleeding past both edges of the frame.
+    draw.rectangle((-40, int(size * 0.70), size + 40, size), fill=(46, 44, 42))
+    # A floor lamp rising out of the bottom edge.
+    draw.rectangle((int(size * 0.06), int(size * 0.40), int(size * 0.10), size), fill=(38, 36, 34))
+    # A console table, also anchored to the frame's edge.
+    draw.rectangle((int(size * 0.62), int(size * 0.62), size + 20, int(size * 0.72)), fill=(52, 48, 44))
+
+    art = mask.resize((int(size * art_scale), int(size * art_scale)), Image.LANCZOS)
+    offset = (int(size * 0.30), int(size * 0.14))
+    scene.paste(Image.new("RGB", art.size, (24, 24, 26)), offset, art)
+    return scene.filter(ImageFilter.GaussianBlur(0.6))

@@ -67,14 +67,20 @@ def _ink_mask(img: Image.Image) -> np.ndarray:
     return mask
 
 
-def largest_component(mask: np.ndarray, work: int = 256) -> np.ndarray:
-    """Keep the biggest connected blob and drop everything else.
+def artwork_component(mask: np.ndarray, work: int = 256) -> np.ndarray:
+    """Isolate the piece on the wall from the room it was staged in.
 
-    Sellers stamp watermarks and shop logos onto stolen photos, and those
-    marks land far from the artwork. Left in, they widen the bounding box we
-    normalise against and wreck the shape — a watermark alone was enough to
-    hide a copy in calibration. Labelling runs on a reduced grid, which is
-    ample for deciding which blob is the piece.
+    Most listing photos are room mockups, and in those the largest dark mass
+    is the sofa, not the artwork — which made every listing sharing a mockup
+    template look like the same design. The distinction that holds is
+    framing rather than size: furniture and floors run off the edge of the
+    photo, while a piece hanging on a wall sits inside it. So the artwork is
+    the biggest blob that touches no border, and only when nothing floats
+    free (a tight product shot, cropped to the piece) does the biggest blob
+    overall win.
+
+    Watermarks and shop logos are dropped by the same pass, since they are
+    small next to the piece they are stamped on.
     """
     if not mask.any():
         return mask
@@ -83,9 +89,10 @@ def largest_component(mask: np.ndarray, work: int = 256) -> np.ndarray:
             (work, work), Image.NEAREST
         )
     ) > 127
+
     remaining = small.copy()
-    best = None
-    best_size = 0
+    floating: tuple[int, np.ndarray] | None = None
+    anchored: tuple[int, np.ndarray] | None = None
     while remaining.any():
         ys, xs = np.nonzero(remaining)
         blob = np.zeros_like(remaining)
@@ -98,14 +105,24 @@ def largest_component(mask: np.ndarray, work: int = 256) -> np.ndarray:
             if grown.sum() == blob.sum():
                 break
             blob = grown
-        size = int(blob.sum())
-        if size > best_size:
-            best_size, best = size, blob
         remaining &= ~blob
-    if best is None:
+
+        size = int(blob.sum())
+        touches_border = bool(
+            blob[0, :].any() or blob[-1, :].any() or blob[:, 0].any() or blob[:, -1].any()
+        )
+        slot = anchored if touches_border else floating
+        if slot is None or size > slot[0]:
+            if touches_border:
+                anchored = (size, blob)
+            else:
+                floating = (size, blob)
+
+    chosen = floating or anchored
+    if chosen is None:
         return mask
     full = np.asarray(
-        Image.fromarray((best * 255).astype(np.uint8), "L").resize(
+        Image.fromarray((chosen[1] * 255).astype(np.uint8), "L").resize(
             (mask.shape[1], mask.shape[0]), Image.NEAREST
         )
     ) > 127
@@ -120,7 +137,7 @@ def silhouette(img: Image.Image, size: int = SILHOUETTE_SIZE) -> np.ndarray:
     onto the same grid. Aspect ratio is deliberately discarded here and kept
     as a separate weak signal.
     """
-    mask = largest_component(_ink_mask(img))
+    mask = artwork_component(_ink_mask(img))
     rows = np.flatnonzero(mask.any(axis=1))
     cols = np.flatnonzero(mask.any(axis=0))
     if rows.size == 0 or cols.size == 0:

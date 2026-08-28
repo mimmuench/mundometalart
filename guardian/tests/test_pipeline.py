@@ -14,11 +14,13 @@ from guardian.etsy_catalog import build_search_queries, category_term, distincti
 from guardian.fingerprint import Fingerprint, fingerprint, shape_distance
 from guardian.matching import (
     DESIGN_MATCH_PX,
+    REVIEW_PX,
     CatalogIndex,
     VERDICT_CLEAR,
     find_boilerplate,
 )
-from guardian.tests.synth import design_mask, photograph
+from guardian.fingerprint import shape_distance
+from guardian.tests.synth import design_mask, photograph, room_scene
 
 FAILURES: list[str] = []
 
@@ -61,6 +63,21 @@ def test_reshot_copy_is_found() -> None:
         match = index.best_match(probe)
         check(match.listing_id == f"{family}-5", f"{family}: identified {match.listing_id}")
         check(match.shape_px <= DESIGN_MATCH_PX, f"{family}: {match.shape_px:.2f}px is a match")
+
+
+def test_room_staging_is_not_mistaken_for_the_design() -> None:
+    print("the piece is read off the wall, not the furniture under it")
+    same_room = dict(seed=1)
+    a = fingerprint(room_scene(design_mask("creature", 4), **same_room))
+    b = fingerprint(room_scene(design_mask("botanical", 9), **same_room))
+    apart = shape_distance(a, b)
+    check(apart > REVIEW_PX,
+          f"two designs staged in one room stay {apart:.2f}px apart")
+
+    elsewhere = fingerprint(room_scene(design_mask("creature", 4), seed=77, art_scale=0.28))
+    together = shape_distance(a, elsewhere)
+    check(together <= DESIGN_MATCH_PX,
+          f"one design staged in two rooms closes to {together:.2f}px")
 
 
 def test_unrelated_design_is_cleared() -> None:
@@ -159,6 +176,7 @@ def test_search_queries_name_the_design() -> None:
 def main() -> int:
     for test in (
         test_reshot_copy_is_found,
+        test_room_staging_is_not_mistaken_for_the_design,
         test_unrelated_design_is_cleared,
         test_watermark_does_not_hide_a_copy,
         test_shop_furniture_is_dropped_but_designs_are_kept,
